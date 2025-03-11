@@ -28,16 +28,17 @@ function Contact() {
     };
   }, []);
 
-  const publishMessage = () => {
+  const publishMessage = (msg) => {
 		if (mqttClient) {
-			mqttClient.publish(MQTT_TOPIC, "Hello from React!");
+			mqttClient.publish(MQTT_TOPIC, msg);
 		}
   };
 
   return (<>
 		<h1>MQTT test</h1>
 		<p>Received Message: {message}</p>
-    <button onClick={publishMessage}>Send MQTT Message</button>
+    <button onClick={() => publishMessage("d1.")}>open door</button>
+    <button onClick={() => publishMessage("c0.")}>refuse</button>
   
 	</>)
 }
