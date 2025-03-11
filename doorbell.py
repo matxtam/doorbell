@@ -5,6 +5,7 @@ import serial
 import threading
 import time
 from queue import Queue
+import paho.mqtt.client as mqtt
 
 class RxThread(threading.Thread):
     def __init__(self, ser, queue):
@@ -105,9 +106,28 @@ class TxThread(threading.Thread):
         self._running = False
         self.ser.close()
 
+MQTT_TOPIC = "matxtam/doorbell"
+MQTT_BROKER = "test.mosquitto.org"
+MQTT_PORT = 8081
+
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected to broker")
+        client.subscribe(MQTT_TOPIC)
+    else:
+        print("Failed to connect to broker")
+
+def on_message(client, userdata, msg):
+    print("Received"+msg.topic+" "+msg.payload.decode('utf-8')
+
 def main():
     print('input q for quit')
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout= 0.5 ) #RPi serial port
+    client = mqtt.Client()
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(MQTT_BROKER, MQTT_PORT, 60)
+    client.loop_forever()
 
     while True:
         input_temp = input()
