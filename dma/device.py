@@ -37,7 +37,7 @@ def on_connect(client, userdata, flags, rc):
     print("[!] Failed to connect to broker")
 
 def handleUpdate():
-    os.system("wget https://raw.githubusercontent.com/matxtam/doorbell/refs/heads/main/dma/device.py")
+    os.system("wget -O device.py https://raw.githubusercontent.com/matxtam/doorbell/refs/heads/main/dma/device.py")
     os.system("sudo systemctl restart dma")
 
 def on_message(client, ser, msg): # ser is a user data
