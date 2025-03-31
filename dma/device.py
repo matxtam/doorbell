@@ -6,6 +6,7 @@ import time
 import os
 # os.system('sudo shutdown -r now')
 
+VER = "0.0.0"
 MQTT_BROKER = "test.mosquitto.org"
 MQTT_PORT = 8081
 ID = ""
@@ -37,14 +38,33 @@ def on_connect(client, userdata, flags, rc):
     print("[!] Failed to connect to broker")
 
 def handleUpdate():
-    os.system("wget -O device.py https://raw.githubusercontent.com/matxtam/doorbell/refs/heads/main/dma/device.py")
-    os.system("sudo systemctl restart dma")
+  os.system("wget -O device.py https://raw.githubusercontent.com/matxtam/doorbell/refs/heads/main/dma/device.py")
+  os.system("sudo systemctl restart dma")
+
+def handleReboot():
+  os.system("sudo reboot")
+
+def handleShutdown():
+  os.system("sudo shutdown")
+
+def handleVer():
+  print(VER)
+
+
 
 def on_message(client, ser, msg): # ser is a user data
   print("[*] Received "+msg.topic+": "+msg.payload.decode('utf-8'))
   if msg.topic == "matxtam/cmd" :
     if msg.payload.decode('utf-8') == "update":
-        handleUpdate()
+      handleUpdate()
+    if msg.payload.decode('utf-8') == "reboot":
+      handleReboot()
+    if msg.payload.decode('utf-8') == "shutdown":
+      handleShutdown()
+    if msg.payload.decode('utf-8') == "dmaver":
+      handleVer()
+ 
+ 
 
 def gen_ID():
   UUID = uuid.uuid4()
