@@ -39,7 +39,7 @@ def stop_broadcast():
 def on_connect(client, userdata, flags, rc):
   if rc == 0:
     print("[+] Connected to broker")
-    client.subscribe("matxtam/cmd")
+    client.subscribe(ID + "/cmd")
     broadcast(client)
     print("[*] Broadcast start")
   else:
@@ -62,7 +62,7 @@ def handleVer():
 
 def on_message(client, ser, msg): # ser is a user data
   print("[*] Received "+msg.topic+": "+msg.payload.decode('utf-8'))
-  if msg.topic == "matxtam/cmd" :
+  if msg.topic == ID + "/cmd" :
     if msg.payload.decode('utf-8') == "update":
       handleUpdate()
     if msg.payload.decode('utf-8') == "reboot":
@@ -89,7 +89,6 @@ def main():
   with open("ID.txt", "r") as text_file:
     global ID
     ID = text_file.read()
-  
 
   # mqtt
   client = mqtt.Client(transport='websockets')
