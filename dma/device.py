@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MQTT_BROKER = os.getenv("MQTT_BROKER")
-MQTT_PORT = os.getenv("MQTT_PORT")
+MQTT_PORT = int(os.getenv("MQTT_PORT"))
 USER = os.getenv("USER")
 PSWD = os.getenv("PSWD")
 
@@ -94,7 +94,7 @@ def main():
   client = mqtt.Client(transport='websockets')
   client.on_connect = on_connect
   client.on_message = on_message
-  client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+  client.tls_set(tls_version=mqtt.ssl.PROTOCOL_TLS)
   client.username_pw_set(USER, PSWD)
   client.connect(MQTT_BROKER, MQTT_PORT, 60)
   client.loop_start()
