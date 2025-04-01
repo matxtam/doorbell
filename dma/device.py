@@ -4,11 +4,19 @@ from pathlib import Path
 import threading
 import time
 import os
+from dotenv import load_dotenv
 # os.system('sudo shutdown -r now')
 
+load_dotenv()
+
+MQTT_BROKER = os.getenv("MQTT_BROKER")
+MQTT_PORT = os.getenv("MQTT_PORT")
+USER = os.getenv("USER")
+PSWD = os.getenv("PSWD")
+
 VER = "0.0.0"
-MQTT_BROKER = "test.mosquitto.org"
-MQTT_PORT = 8081
+# MQTT_BROKER = "test.mosquitto.org"
+# MQTT_PORT = 8081
 ID = ""
 isConnected = False
 timer = None
@@ -45,7 +53,7 @@ def handleReboot():
   os.system("sudo reboot")
 
 def handleShutdown():
-  os.system("sudo shutdown")
+  os.system("sudo shutdown -h now")
 
 def handleVer():
   print(VER)
@@ -87,7 +95,8 @@ def main():
   client = mqtt.Client(transport='websockets')
   client.on_connect = on_connect
   client.on_message = on_message
-  client.tls_set()
+  client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+  client.username_pw_set(USER, PSWD)
   client.connect(MQTT_BROKER, MQTT_PORT, 60)
   client.loop_start()
   print("[*] mqtt client start...")
