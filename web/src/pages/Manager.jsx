@@ -99,10 +99,6 @@ function Manager() {
   return (<div className="center">
 		<h1>Device Manager</h1>
 
-		<button onClick={
-			() => publishMessage("topic/test", "test")
-		}>test</button>
-		
 		{mqttClient ? <></> : <>
 		<input
       type="text"
