@@ -57,9 +57,13 @@ function Manager() {
 		inputUserRef.current.value = "";
 		inputPswdRef.current.value = "";
 
-		client.on("connect", () => {
-			console.log("connected to mqtt broker");
-			client.subscribe("matxtam/devices");
+		client.on("connect", connack => {
+			if(connack.returnCode == 0){
+				console.log("connected to mqtt broker");
+				alert("connected to broker");
+				client.subscribe("matxtam/devices");
+			}
+			else alert("connection failed");
 		});
 
     client.on("message", (topic, payload) => {
@@ -87,6 +91,7 @@ function Manager() {
 	const handleDisconnect = () => {
     mqttClient.end();
 		setMqttClient(null);
+		setDevices([]);
 	}
 
   const publishMessage = (topic, msg) => {
