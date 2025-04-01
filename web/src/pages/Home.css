@@ -19,6 +19,13 @@
 
 }
 
+.activedevice {
+	background-color: #d1ffbd;
+	border: 5px solid #1a1a1a;
+	border-radius: 10px;
+	padding: 10px;
+}
+
 h1 {
   margin-bottom: 20px;
   font-size: 24px;

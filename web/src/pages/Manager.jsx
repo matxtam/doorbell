@@ -114,7 +114,9 @@ function Manager() {
 		<button onClick={mqttClient ? handleDisconnect : handleConnect
 		}>{mqttClient ? "disconnect" : "connect"}</button>
 		{devices.map((device) => 
-			(<div className="device" key={device.id}>
+			(<div className={
+				device.live ? "activedevice" : "device"
+			} key={device.id}>
 				<p >{device.id}</p>
 				<p>{device.live ? "active" : "power off"}</p>
 				<button onClick={
