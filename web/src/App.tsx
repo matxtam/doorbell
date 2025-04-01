@@ -1,6 +1,7 @@
 // App.jsx
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Manager from "./pages/Manager.jsx";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
@@ -9,6 +10,7 @@ function App() {
     <div id="app">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/manager" element={<Manager />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

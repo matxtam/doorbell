@@ -8,6 +8,15 @@
   text-align: center;
   background-color: #f4f4f4;
   font-family: Arial, sans-serif;
+	gap: 5px;
+}
+
+.device {
+	background-color: #fafafa;
+	border: 5px solid #1a1a1a;
+	border-radius: 10px;
+	padding: 10px;
+
 }
 
 h1 {
@@ -29,6 +38,7 @@ button {
   padding: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+	margin: 3px;
 }
 
 button img {
